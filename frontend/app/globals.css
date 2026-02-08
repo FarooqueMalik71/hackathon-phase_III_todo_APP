@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* ===================================== */
+/* BASE */
+/* ===================================== */
+@layer base {
+
+  :root {
+    --background: #ffffff;
+    --surface: #f9fafb;
+
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+
+    --border: #e5e7eb;
+  }
+
+  .dark {
+    --background: #0f172a;
+    --surface: #1e293b;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+
+    --border: #334155;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--text-primary);
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1 { font-size: 28px; font-weight: 700; }
+  h2 { font-size: 22px; font-weight: 600; }
+  h3 { font-size: 18px; font-weight: 600; }
+
+  /* ⚠️ IMPORTANT: NO @apply with var() */
+  * {
+    border-color: var(--border);
+  }
+}
+
+
+
+/* ===================================== */
+/* COMPONENTS */
+/* ===================================== */
+@layer components {
+
+  /* ---------- BUTTON BASE ---------- */
+  .btn {
+    @apply inline-flex items-center justify-center
+    h-11 px-5 rounded-xl text-sm font-medium
+    transition-all duration-150 select-none
+    disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-primary {
+    @apply btn bg-blue-600 text-white
+    shadow-sm hover:shadow-md
+    hover:bg-blue-700 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-200 text-gray-900
+    hover:bg-gray-300;
+  }
+
+  .btn-outline {
+    @apply btn border bg-transparent
+    hover:bg-gray-100 dark:hover:bg-slate-700;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600 text-white
+    hover:bg-red-700;
+  }
+
+
+
+  /* ---------- INPUT ---------- */
+.input {
+  @apply w-full h-11 px-4 rounded-xl border
+  bg-surface
+  text-[var(--text-primary)]
+  text-sm shadow-sm
+  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+  transition-all;
+}
+
+
+
+
+  /* ---------- CARD ---------- */
+  .card {
+    @apply rounded-2xl shadow-sm border p-5 transition-all hover:shadow-md;
+    background-color: var(--surface); /* pure css (safe) */
+  }
+
+
+
+  /* ---------- CONTAINER ---------- */
+  .container-app {
+    @apply max-w-5xl mx-auto px-6 py-8 space-y-6;
+  }
+
+
+
+  /* ---------- FORM ---------- */
+  .form-card {
+    @apply card w-full max-w-md mx-auto space-y-4;
+  }
+}
+
+
+
+/* ===================================== */
+/* UTILITIES */
+/* ===================================== */
+@layer utilities {
+  .center {
+    @apply flex items-center justify-center;
+  }
+}
