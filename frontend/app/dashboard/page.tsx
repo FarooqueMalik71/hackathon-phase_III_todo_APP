@@ -221,17 +221,19 @@ export default function DashboardPage() {
         />
 
         <main className="container py-8">
+
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-text-primary mb-2">Dashboard</h1>
-              <p className="text-text-secondary">Manage your tasks and stay productive</p>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Dashboard</h1>
+              <p className="text-gray-500 dark:text-gray-400">Manage your tasks and stay productive</p>
             </div>
 
-            <Button onClick={() => setIsModalOpen(true)} size="lg" className="shadow-lg">
-              <PlusIcon className="h-5 w-5 mr-2" />
-              Add New Task
-            </Button>
+              <Button onClick={() => setIsModalOpen(true)}
+                size="lg" className="btn-primary w-full lg:w-auto shadow-md hover:shadow-xl transition-all duration-200 flex items-center justify-center">
+              <PlusIcon className="h-5 w-5 mr-2" />Add New Task</Button>
+              
           </div>
+
 
           {/* Statistics Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

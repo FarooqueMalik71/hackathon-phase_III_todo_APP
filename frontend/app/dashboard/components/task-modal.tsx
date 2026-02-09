@@ -142,7 +142,7 @@ export function TaskModal({ isOpen, onClose, onSave, task, loading = false }: Ta
           <Button type="button" variant="outline" onClick={onClose} disabled={loading} size="lg">
             Cancel
           </Button>
-          <Button type="submit" loading={loading} size="lg" className="min-w-[120px]">
+          <Button type="submit" variant="outline" loading={loading} size="lg" >
             {task ? 'Update Task' : 'Create Task'}
           </Button>
         </div>

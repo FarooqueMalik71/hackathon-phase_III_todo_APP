@@ -12,12 +12,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: 'var(--background)',
-        surface: 'var(--surface)',
-        'text-primary': 'var(--text-primary)',
-        'text-secondary': 'var(--text-secondary)',
-        border: 'var(--border)',
-      },
+  background: 'var(--background)',
+  surface: 'var(--surface)',
+  'text-primary': 'var(--text-primary)',
+  'text-secondary': 'var(--text-secondary)',
+  border: 'var(--border)',
+
+  primary: 'var(--primary)',
+  'primary-foreground': 'var(--primary-foreground)',
+},
       borderRadius: {
         xl: '12px',
         '2xl': '16px',

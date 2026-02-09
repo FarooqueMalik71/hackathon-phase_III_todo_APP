@@ -2,7 +2,7 @@
 
 import { Button } from '@/app/dashboard/components/ui/button';
 import { ThemeToggle } from '@/app/dashboard/components/ui/theme-toggle';
-import { LogOutIcon, MenuIcon, UserIcon, MessageCircleIcon } from 'lucide-react';
+import { LogOutIcon, MenuIcon, UserIcon, MessageCircleIcon, CheckSquare2 } from 'lucide-react';
 import { useState } from 'react';
 
 interface User {
@@ -24,11 +24,9 @@ export function HeaderNav({ user, currentPage, onLogout }: HeaderNavProps) {
     <header className="sticky top-0 z-10 bg-background border-b border-border shadow-sm">
       <div className="container flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-3">
-          <div className="bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl p-2 shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-            </svg>
-          </div>
+          <div className="bg-surface border border-border rounded-xl p-2 shadow-soft">
+    <CheckSquare2 className="h-5 w-5 text-text-primary" />
+  </div>
           <div>
             <h1 className="text-xl font-bold text-text-primary">TaskFlow</h1>
             <p className="text-xs text-text-secondary hidden sm:block">Manage your tasks efficiently</p>

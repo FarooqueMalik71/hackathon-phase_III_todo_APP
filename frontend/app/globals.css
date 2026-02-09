@@ -16,6 +16,10 @@
     --text-secondary: #6b7280;
 
     --border: #e5e7eb;
+
+    /* ⭐ ADD THESE ONLY */
+    --primary: #2563eb;            /* blue-600 */
+    --primary-foreground: #ffffff;
   }
 
   .dark {
@@ -26,7 +30,13 @@
     --text-secondary: #cbd5e1;
 
     --border: #334155;
+
+    /* ⭐ ADD THESE ONLY */
+    --primary: #3b82f6;            /* slightly brighter for dark */
+    --primary-foreground: #ffffff;
   }
+}
+
 
   body {
     background-color: var(--background);
@@ -44,7 +54,7 @@
   * {
     border-color: var(--border);
   }
-}
+
 
 
 
@@ -54,33 +64,42 @@
 @layer components {
 
   /* ---------- BUTTON BASE ---------- */
-  .btn {
-    @apply inline-flex items-center justify-center
-    h-11 px-5 rounded-xl text-sm font-medium
-    transition-all duration-150 select-none
-    disabled:opacity-50 disabled:pointer-events-none;
-  }
+/* ---------- BUTTON BASE ---------- */
+.btn {
+  @apply inline-flex items-center justify-center
+  h-11 px-5 rounded-xl text-sm font-medium
+  transition-all duration-150 select-none
+  disabled:opacity-50 disabled:pointer-events-none;
+}
 
-  .btn-primary {
-    @apply btn bg-blue-600 text-white
-    shadow-sm hover:shadow-md
-    hover:bg-blue-700 active:scale-95;
-  }
+/* Primary */
+.btn-primary {
+  @apply btn bg-blue-600 text-white
+  hover:bg-blue-700 shadow-sm hover:shadow-md active:scale-95;
+}
 
-  .btn-secondary {
-    @apply btn bg-gray-200 text-gray-900
-    hover:bg-gray-300;
-  }
+/* Secondary */
+.btn-secondary {
+  @apply btn
+  bg-gray-200 text-gray-900
+  hover:bg-gray-300
+  dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700;
+}
 
-  .btn-outline {
-    @apply btn border bg-transparent
-    hover:bg-gray-100 dark:hover:bg-slate-700;
-  }
+/* Outline */
+.btn-outline {
+  @apply btn
+  border border-gray-300
+  text-gray-900 bg-transparent
+  hover:bg-gray-100
+  dark:border-gray-600 dark:text-white dark:hover:bg-gray-700;
+}
 
-  .btn-danger {
-    @apply btn bg-red-600 text-white
-    hover:bg-red-700;
-  }
+/* Danger */
+.btn-danger {
+  @apply btn bg-red-600 text-white hover:bg-red-700;
+}
+
 
 
 
