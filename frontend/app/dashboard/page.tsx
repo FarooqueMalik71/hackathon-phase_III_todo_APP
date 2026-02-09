@@ -231,7 +231,7 @@ export default function DashboardPage() {
               <Button onClick={() => setIsModalOpen(true)}
                 size="lg" className="btn-primary w-full lg:w-auto shadow-md hover:shadow-xl transition-all duration-200 flex items-center justify-center">
               <PlusIcon className="h-5 w-5 mr-2" />Add New Task</Button>
-              
+
           </div>
 
 
@@ -367,19 +367,39 @@ export default function DashboardPage() {
 
         {/* Footer */}
         <footer className="mt-16 py-8 border-t border-border bg-surface">
-          <div className="container text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
+            <div className="container">
+            <div className="text-center space-y-3">
+              <div className="flex items-center justify-center gap-2">
               <div className="bg-primary-500 rounded-lg p-1">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                 </svg>
               </div>
-              <span className="text-sm font-medium text-text-secondary">TaskFlow Pro</span>
+              <span className="text-sm font-semibold text-text-primary">TaskFlow Pro</span>
+              </div>
+              <div className="space-y-1">
+              <p className="text-xs text-text-secondary">
+                Built and maintained by <span className="font-medium text-text-primary">Farooque Malik</span>
+              </p>
+              <p className="text-xs text-text-secondary">
+                &copy; {new Date().getFullYear()} TaskFlow. All rights reserved.
+              </p>
+              </div>
             </div>
-            <p className="text-xs text-text-secondary">
-              Press <kbd className="px-1 py-0.5 bg-surface rounded text-xs">Ctrl+N</kbd> to quickly add a new task
-            </p>
-          </div>
+             <div className="mt-6 text-center">
+              <a href="/terms" className="text-xs text-text-secondary hover:text-primary-500 transition-colors mx-2">Terms of Service</a>
+              <a href="/privacy" className="text-xs text-text-secondary hover:text-primary-500 transition-colors mx-2">Privacy Policy</a>
+              <a href="/contact" className="text-xs text-text-secondary hover:text-primary-500 transition-colors mx-2">Contact Us</a>
+             </div>
+             <div className="mt-6 text-center">
+              <p className="text-xs text-text-secondary">
+                Follow us on: <a href="https://twitter.com/farooque_malik" className="text-primary-500 text-blue-500 hover:underline">Twitter</a> and <a href="https://linkdin.com/FarooqueMalik71/" className="text-primary-500 text-blue-700 hover:underline">LinkedIn</a>
+              </p>
+             </div>
+
+              </div>
+
+
         </footer>
 
         {/* Floating AI Chat Button */}
