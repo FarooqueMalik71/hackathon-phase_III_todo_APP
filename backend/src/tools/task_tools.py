@@ -1,57 +1,61 @@
 """
 MCP Task Tools for AI chatbot
-Provides task management tools for the AI agent
+Provides task management tools for the AI agent.
+All tools delegate to TaskIntegrationService which uses the shared task_service.
 """
 from typing import Dict, Any, Optional
 from .mcp_server import MCPTool, ToolCategory, mcp_server
 from ..services.task_integration_service import TaskIntegrationService
 
 
-# Initialize task integration service
-task_service = TaskIntegrationService()
+# Initialize task integration service (stateless — session passed per call)
+task_integration = TaskIntegrationService()
 
 
-# Tool Handlers
+# Tool Handlers — session and user_id are injected by the AI agent service
 async def add_task_handler(
+    session,
     user_id: str,
     title: str,
     description: Optional[str] = None,
     priority: Optional[str] = None,
-    due_date: Optional[str] = None
+    due_date: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Handler for add_task tool"""
-    return task_service.add_task(user_id, title, description, priority, due_date)
+    return await task_integration.add_task(session, user_id, title, description, priority, due_date)
 
 
-async def complete_task_handler(user_id: str, task_id: str) -> Dict[str, Any]:
+async def complete_task_handler(session, user_id: str, task_id: str) -> Dict[str, Any]:
     """Handler for complete_task tool"""
-    return task_service.complete_task(user_id, task_id)
+    return await task_integration.complete_task(session, user_id, task_id)
 
 
 async def list_tasks_handler(
+    session,
     user_id: str,
     completed: Optional[bool] = None,
-    limit: int = 20
+    limit: int = 20,
 ) -> Dict[str, Any]:
     """Handler for list_tasks tool"""
-    return task_service.list_tasks(user_id, completed, limit)
+    return await task_integration.list_tasks(session, user_id, completed, limit)
 
 
 async def update_task_handler(
+    session,
     user_id: str,
     task_id: str,
     title: Optional[str] = None,
     description: Optional[str] = None,
     priority: Optional[str] = None,
-    due_date: Optional[str] = None
+    due_date: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Handler for update_task tool"""
-    return task_service.update_task(user_id, task_id, title, description, priority, due_date)
+    return await task_integration.update_task(session, user_id, task_id, title, description, priority, due_date)
 
 
-async def delete_task_handler(user_id: str, task_id: str) -> Dict[str, Any]:
+async def delete_task_handler(session, user_id: str, task_id: str) -> Dict[str, Any]:
     """Handler for delete_task tool"""
-    return task_service.delete_task(user_id, task_id)
+    return await task_integration.delete_task(session, user_id, task_id)
 
 
 # Tool Definitions

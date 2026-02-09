@@ -105,7 +105,10 @@
       "Bash(git commit -m \"Initial commit with todo app frontend\n- Complete Next.js frontend with authentication flow\n- Task management functionality with CRUD operations\n- Protected routes and JWT token handling\n- Environment variables secured in gitignore\")",
       "Bash(git branch -M main)",
       "Bash(git remote add origin https://github.com/FarooqueMalik71/hackathon-phase_II_todo_APP.git)",
-      "Bash(git push -u origin main)"
+      "Bash(git push -u origin main)",
+      "Bash(ls:*)",
+      "Bash(npx next lint)",
+      "Bash(npm run build:*)"
     ]
   }
 }

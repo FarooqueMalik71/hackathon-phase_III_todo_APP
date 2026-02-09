@@ -279,7 +279,13 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         {error && (
           <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-300">
             <AlertCircle className="w-5 h-5 flex-shrink-0" />
-            <p className="text-sm">{error}</p>
+            <p className="text-sm flex-1">{error}</p>
+            <button
+              onClick={() => setError(null)}
+              className="text-xs px-2 py-1 bg-red-100 dark:bg-red-800 hover:bg-red-200 dark:hover:bg-red-700 rounded transition-colors"
+            >
+              Dismiss
+            </button>
           </div>
         )}
       </div>

@@ -10,37 +10,45 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 class ChatAPIService {
   private client: AxiosInstance;
-  private userId: string;
 
-  constructor(userId: string = "user123") {
-    this.userId = userId;
+  constructor() {
     this.client = axios.create({
       baseURL: API_BASE_URL,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userId}`,
       },
-      timeout: 30000, // 30 second timeout
+      timeout: 0,
+    });
+
+    // Add auth token from localStorage to every request
+    this.client.interceptors.request.use((config) => {
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("auth-token");
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      }
+      return config;
     });
   }
 
   /**
-   * Send a chat message
+   * Send a chat message (auth-protected, user from JWT)
    */
   async sendMessage(request: ChatRequest): Promise<ChatResponse> {
     const response = await this.client.post<ChatResponse>(
-      `/api/${this.userId}/chat`,
+      `/api/chat`,
       request
     );
     return response.data;
   }
 
   /**
-   * Get all conversations for the user
+   * Get all conversations for the authenticated user
    */
   async getConversations(limit: number = 50): Promise<Conversation[]> {
     const response = await this.client.get<Conversation[]>(
-      `/api/${this.userId}/conversations`,
+      `/api/conversations`,
       { params: { limit } }
     );
     return response.data;
@@ -54,7 +62,7 @@ class ChatAPIService {
     limit: number = 100
   ): Promise<Message[]> {
     const response = await this.client.get<Message[]>(
-      `/api/${this.userId}/conversations/${conversationId}/messages`,
+      `/api/conversations/${conversationId}/messages`,
       { params: { limit } }
     );
     return response.data;
@@ -65,16 +73,8 @@ class ChatAPIService {
    */
   async deleteConversation(conversationId: number): Promise<void> {
     await this.client.delete(
-      `/api/${this.userId}/conversations/${conversationId}`
+      `/api/conversations/${conversationId}`
     );
-  }
-
-  /**
-   * Set user ID for authentication
-   */
-  setUserId(userId: string) {
-    this.userId = userId;
-    this.client.defaults.headers.Authorization = `Bearer ${userId}`;
   }
 }
 

@@ -1,9 +1,8 @@
-from sqlmodel import create_engine, Session as SQLModelSession
+from sqlmodel import create_engine
 from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import sessionmaker
 from core.config import settings
-import os
 
 # Create engines based on database type
 database_url = settings.DATABASE_URL
@@ -87,6 +86,3 @@ def get_sync_session():
         yield session
 
 
-def create_sync_session() -> SQLModelSession:
-    """Create a standalone sync database session (for manual use outside FastAPI DI)"""
-    return SQLModelSession(sync_engine)

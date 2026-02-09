@@ -1,6 +1,7 @@
 """
 AI Agent Service for AI chatbot
-Handles natural language processing and AI agent integration via OpenRouter
+Handles natural language processing and AI agent integration via OpenRouter.
+Passes async db session and user_id through to MCP tool execution.
 """
 from typing import List, Dict, Any, Optional
 import openai
@@ -48,15 +49,17 @@ Be conversational, friendly, and helpful. Confirm actions and provide clear feed
         self,
         user_message: str,
         conversation_history: List[Dict[str, str]],
-        user_id: str
+        user_id: str,
+        db_session=None,
     ) -> Dict[str, Any]:
         """
-        Process user message and generate AI response
+        Process user message and generate AI response.
 
         Args:
             user_message: The user's message
             conversation_history: Previous conversation messages
             user_id: The user ID for tool execution context
+            db_session: Async database session for tool operations
 
         Returns:
             Dictionary with response and tool calls
@@ -99,11 +102,13 @@ Be conversational, friendly, and helpful. Confirm actions and provide clear feed
                     tool_name = tool_call.function.name
                     tool_args = json.loads(tool_call.function.arguments)
 
-                    # Add user_id to tool arguments
-                    tool_args["user_id"] = user_id
-
-                    # Execute tool
-                    tool_result = await self.mcp_server.execute_tool(tool_name, **tool_args)
+                    # Execute tool with session and user_id (NOT passed as tool_args)
+                    tool_result = await self.mcp_server.execute_tool(
+                        tool_name,
+                        session=db_session,
+                        user_id=user_id,
+                        **tool_args,
+                    )
 
                     tool_calls.append({
                         "tool": tool_name,
@@ -160,14 +165,8 @@ Be conversational, friendly, and helpful. Confirm actions and provide clear feed
             raise AIServiceError(f"Unexpected error: {str(e)}")
 
     def detect_language(self, text: str) -> str:
-        """
-        Detect if the input is English or Roman Urdu
-        Simple heuristic-based detection
-        """
-        # Common Roman Urdu words
+        """Detect if the input is English or Roman Urdu"""
         urdu_keywords = ["karo", "karna", "hai", "ka", "ko", "ke", "se", "mein", "aur"]
-
         text_lower = text.lower()
         urdu_count = sum(1 for word in urdu_keywords if word in text_lower)
-
         return "urdu" if urdu_count > 0 else "english"

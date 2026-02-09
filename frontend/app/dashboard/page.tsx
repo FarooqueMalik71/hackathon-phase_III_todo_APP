@@ -81,6 +81,16 @@ export default function DashboardPage() {
     return cleanup;
   }, []);
 
+  // Polling: refresh tasks every 3 seconds for cross-device sync
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!document.hidden) {
+        fetchTasks();
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Filter and search tasks
   const filteredTasks = useMemo(() => {
     let filtered = tasks;
@@ -297,9 +307,15 @@ export default function DashboardPage() {
           </div>
 
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-border rounded-lg flex items-center gap-3">
+            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3">
               <AlertTriangleIcon className="h-5 w-5 text-red-500 flex-shrink-0" />
-              <span className="text-red-700">{error}</span>
+              <span className="text-red-700 dark:text-red-300 flex-1">{error}</span>
+              <button
+                onClick={() => { setError(null); fetchTasks(); }}
+                className="px-3 py-1 text-sm bg-red-100 dark:bg-red-800 hover:bg-red-200 dark:hover:bg-red-700 text-red-700 dark:text-red-200 rounded-md transition-colors"
+              >
+                Retry
+              </button>
             </div>
           )}
 

@@ -1,6 +1,7 @@
 """
 MCP Tool Server for AI chatbot
-Provides tool definitions and execution framework
+Provides tool definitions and execution framework.
+Tool handlers receive (session, user_id, **tool_args).
 """
 from typing import Dict, Any, Callable, List
 from enum import Enum
@@ -41,10 +42,10 @@ class MCPTool:
             }
         }
 
-    async def execute(self, **kwargs) -> Dict[str, Any]:
-        """Execute the tool with given parameters"""
+    async def execute(self, session, user_id: str, **kwargs) -> Dict[str, Any]:
+        """Execute the tool with session, user_id, and given parameters"""
         try:
-            result = await self.handler(**kwargs)
+            result = await self.handler(session=session, user_id=user_id, **kwargs)
             return {
                 "success": True,
                 "result": result
@@ -80,10 +81,10 @@ class MCPToolServer:
         """Get tools filtered by category"""
         return [tool for tool in self.tools.values() if tool.category == category]
 
-    async def execute_tool(self, name: str, **kwargs) -> Dict[str, Any]:
-        """Execute a tool by name with given parameters"""
+    async def execute_tool(self, name: str, session, user_id: str, **kwargs) -> Dict[str, Any]:
+        """Execute a tool by name with session, user_id, and parameters"""
         tool = self.get_tool(name)
-        return await tool.execute(**kwargs)
+        return await tool.execute(session=session, user_id=user_id, **kwargs)
 
 
 # Global MCP tool server instance

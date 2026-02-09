@@ -50,6 +50,12 @@ export function onTaskChange(callback: () => void): () => void {
     window.addEventListener("tasks-changed", handler);
   }
 
+  // Refresh when user switches back to this tab
+  const focusHandler = () => callback();
+  if (typeof window !== "undefined") {
+    window.addEventListener("focus", focusHandler);
+  }
+
   // Return cleanup function
   return () => {
     if (ch) {
@@ -57,6 +63,7 @@ export function onTaskChange(callback: () => void): () => void {
     }
     if (typeof window !== "undefined") {
       window.removeEventListener("tasks-changed", handler);
+      window.removeEventListener("focus", focusHandler);
     }
   };
 }

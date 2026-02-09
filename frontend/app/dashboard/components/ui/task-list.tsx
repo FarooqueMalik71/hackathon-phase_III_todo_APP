@@ -53,7 +53,7 @@ export function TaskList({ tasks, onTaskToggle, onTaskEdit, onTaskDelete, loadin
         </div>
         <h3 className="text-xl font-semibold text-text-primary mb-2">No tasks found</h3>
         <p className="text-text-secondary mb-6 max-w-sm mx-auto">
-          {tasks.length === 0 ? "Get started by creating your first task. Stay organized and boost your productivity!" : "Try adjusting your search or filters to find what you're looking for."}
+          {tasks.length === 0 ? "Get started by creating your first task or chat with the AI Assistant to add tasks naturally." : "Try adjusting your search or filters to find what you're looking for."}
         </p>
         {tasks.length === 0 && (
           <Button onClick={() => window.dispatchEvent(new CustomEvent('add-task'))} className="shadow-lg">

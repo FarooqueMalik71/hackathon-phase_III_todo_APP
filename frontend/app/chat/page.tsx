@@ -9,8 +9,9 @@ import Link from "next/link";
 import { ChatInterface } from "@/components/chat/ChatInterface";
 import { chatAPI } from "@/lib/api/chatAPI";
 import { Conversation } from "@/lib/types/chat";
-import { MessageCircle, Plus, Trash2, Clock, ArrowLeft } from "lucide-react";
+import { MessageCircle, Plus, Trash2, Clock, ArrowLeft, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { motion } from "framer-motion";
+import ProtectedRoute from "@/app/dashboard/components/protected-route";
 
 export default function ChatPage() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -19,6 +20,12 @@ export default function ChatPage() {
   >(null);
   const [isLoadingConversations, setIsLoadingConversations] = useState(true);
   const [showSidebar, setShowSidebar] = useState(true);
+
+  // Hide sidebar by default on mobile
+  useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) setShowSidebar(false);
+  }, []);
 
   useEffect(() => {
     loadConversations();
@@ -91,7 +98,8 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+    <ProtectedRoute>
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 relative">
       {/* Sidebar - Conversation History */}
       <motion.div
         initial={{ width: showSidebar ? 320 : 0 }}
@@ -179,12 +187,25 @@ export default function ChatPage() {
       </motion.div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Sidebar toggle */}
+        <button
+          onClick={() => setShowSidebar(!showSidebar)}
+          className="absolute top-4 left-4 z-10 md:hidden p-2 bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700"
+          aria-label={showSidebar ? "Hide sidebar" : "Show sidebar"}
+        >
+          {showSidebar ? (
+            <PanelLeftClose className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+          ) : (
+            <PanelLeftOpen className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+          )}
+        </button>
         <ChatInterface
           conversationId={currentConversationId}
           onConversationCreated={handleConversationCreated}
         />
       </div>
     </div>
+    </ProtectedRoute>
   );
 }
