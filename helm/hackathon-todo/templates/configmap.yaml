@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "hackathon-todo.fullname" . }}-config
+  labels:
+    {{- include "hackathon-todo.labels" . | nindent 4 }}
+data:
+  ENVIRONMENT: {{ .Values.config.environment | quote }}
+  MODEL: {{ .Values.config.model | quote }}
+  OPENAI_BASE_URL: {{ .Values.config.openaiBaseUrl | quote }}
+  CORS_ORIGINS: {{ .Values.config.corsOrigins | quote }}
+  NEXT_PUBLIC_API_URL: {{ .Values.config.nextPublicApiUrl | quote }}

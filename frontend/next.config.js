@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   // Enable typed routes
   typedRoutes: true,
   // Allow external resources

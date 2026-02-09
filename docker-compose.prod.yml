@@ -1,0 +1,73 @@
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: hackathon-todo-postgres-prod
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hackathon_todo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../infra/docker/backend.Dockerfile
+
+    container_name: hackathon-todo-backend-prod
+
+    env_file:
+      - .env
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    networks:
+      - app-network
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../infra/docker/frontend.Dockerfile
+
+    container_name: hackathon-todo-frontend-prod
+
+    ports:
+      - "3000:3000"
+
+    depends_on:
+      - backend
+
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge
+
+
+volumes:
+  postgres_data_prod:

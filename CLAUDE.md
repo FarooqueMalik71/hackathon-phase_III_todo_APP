@@ -212,6 +212,8 @@ See `.specify/memory/constitution.md` for code quality, testing, performance, se
 ## Active Technologies
 - Python 3.11, TypeScript/JavaScript (Node.js 18+) + FastAPI, OpenRouter API, MCP Protocol, existing Phase II backend services (001-ai-chatbot)
 - PostgreSQL (Neon), Conversation and Message entities (001-ai-chatbot)
+- Python 3.11 (backend), Node.js 18+ / TypeScript (frontend) + FastAPI, Next.js 16, PostgreSQL 16, Docker, Minikube, Helm 3 (003-k8s-minikube-deploy)
+- PostgreSQL 16-alpine (PersistentVolumeClaim in K8s) (003-k8s-minikube-deploy)
 
 ## Recent Changes
 - 001-ai-chatbot: Added Python 3.11, TypeScript/JavaScript (Node.js 18+) + FastAPI, OpenRouter API, MCP Protocol, existing Phase II backend services

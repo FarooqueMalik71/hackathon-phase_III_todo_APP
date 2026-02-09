@@ -108,7 +108,9 @@
       "Bash(git push -u origin main)",
       "Bash(ls:*)",
       "Bash(npx next lint)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(git -C /mnt/e/hackathon_todo_II branch:*)",
+      "Bash(bash:*)"
     ]
   }
 }

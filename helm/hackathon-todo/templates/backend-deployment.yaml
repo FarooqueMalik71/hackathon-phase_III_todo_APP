@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hackathon-todo.fullname" . }}-backend
+  labels:
+    {{- include "hackathon-todo.labels" . | nindent 4 }}
+    app: backend
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: {{ .Values.backend.image }}
+          imagePullPolicy: {{ .Values.backend.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.backend.port }}
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "hackathon-todo.fullname" . }}-secret
+                  key: DATABASE_URL
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "hackathon-todo.fullname" . }}-secret
+                  key: SECRET_KEY
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "hackathon-todo.fullname" . }}-secret
+                  key: OPENAI_API_KEY
+            - name: OPENAI_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hackathon-todo.fullname" . }}-config
+                  key: OPENAI_BASE_URL
+            - name: MODEL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hackathon-todo.fullname" . }}-config
+                  key: MODEL
+            - name: ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hackathon-todo.fullname" . }}-config
+                  key: ENVIRONMENT
+            - name: CORS_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hackathon-todo.fullname" . }}-config
+                  key: CORS_ORIGINS
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.backend.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.backend.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            {{- toYaml .Values.backend.resources | nindent 12 }}

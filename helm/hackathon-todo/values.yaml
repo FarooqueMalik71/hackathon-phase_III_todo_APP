@@ -1,0 +1,44 @@
+backend:
+  image: hackathon-todo-backend:latest
+  imagePullPolicy: Never
+  port: 8000
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+frontend:
+  image: hackathon-todo-frontend:latest
+  imagePullPolicy: Never
+  port: 3000
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+postgres:
+  image: postgres:16-alpine
+  imagePullPolicy: IfNotPresent
+  port: 5432
+  storage: 1Gi
+
+config:
+  databaseUrl: postgresql://postgres:postgres@hackathon-todo-postgres:5432/hackathon_todo
+  secretKey: your-secret-key-change-in-production
+  openaiBaseUrl: https://openrouter.ai/api/v1
+  model: mistralai/mistral-7b-instruct
+  environment: development
+  corsOrigins: http://localhost:3000
+  nextPublicApiUrl: http://hackathon-todo-backend:8000
+
+secrets:
+  openaiApiKey: ""
+  postgresPassword: postgres
