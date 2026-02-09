@@ -393,7 +393,7 @@ export default function DashboardPage() {
              </div>
              <div className="mt-6 text-center">
               <p className="text-xs text-text-secondary">
-                Follow us on: <a href="https://twitter.com/farooque_malik" className="text-primary-500 text-blue-500 hover:underline">Twitter</a> and <a href="https://linkdin.com/FarooqueMalik71/" className="text-primary-500 text-blue-700 hover:underline">LinkedIn</a>
+                Follow us on: <a href="https://x.com/FarooqueMalik71" className="text-primary-500 text-blue-500 hover:underline">Twitter</a> and <a href="https://www.linkedin.com/in/farooque-malik871/" className="text-primary-500 text-blue-700 hover:underline">LinkedIn</a>
               </p>
              </div>
 
